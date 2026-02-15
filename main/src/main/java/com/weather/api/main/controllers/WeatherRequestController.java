@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.weather.api.main.configuration.WeatherRequestAPIMapper;
 import com.weather.api.main.entities.WeatherAPIResponse;
-import com.weather.api.main.weatherrequest.WeatherRequest;
 
 import java.util.Optional;
 
@@ -23,17 +22,17 @@ public class WeatherRequestController {
     @GetMapping("/air-temperature")
     public WeatherAPIResponse getAirTemp(@RequestParam(name = "date")Optional<String> dateTime) {
 
-        WeatherRequest weatherRequest = weatherRequestAPIMapper.getRequester("air-temperature");
+       
         if (dateTime.isPresent()) {
-            return weatherRequest.getReadindgsWithDate(dateTime.get());
+            return weatherRequestAPIMapper.getDataReadingByDate("air-temperature", dateTime.get());
         }
-        return weatherRequest.getReadings();
+        return weatherRequestAPIMapper.getDataReading("air-temperature");
     }
 
     @GetMapping("/air-temperature/text")
     public String getAirTempInText() {
-        WeatherRequest weatherRequest = weatherRequestAPIMapper.getRequester("air-temperature");
-        return weatherRequest.getReadingsInText();
+        
+        return weatherRequestAPIMapper.getDataReadingText("air-temperature");
     }
 
 }
